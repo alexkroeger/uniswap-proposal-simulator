@@ -15,3 +15,11 @@ This project uses [hardhat](https://hardhat.org/).
 You can run a script with the following command:
 
 `npx hardhat run scripts/<script name>`
+
+## Dev
+
+You can fix lint errors and pretty JSON files, run:
+
+```
+npx eslint '**/*.{js,ts}' --fix && npx prettier '**/*.{json,sol,md}' --write
+```

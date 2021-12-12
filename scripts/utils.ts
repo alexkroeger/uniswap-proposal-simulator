@@ -79,7 +79,9 @@ async function executeUniswapProposal(
 
 export async function simulateUniswapProposalExecution(
   targetProposalNumber: number
-) {
+): Promise<{
+  forkBlockNumber: number;
+}> {
   const governorContract = new ethers.Contract(
     UNISWAP_GOVERNORBRAVODELEGATOR_ADDRESS,
     GovernorBravoDelegateAbi,
@@ -96,13 +98,14 @@ export async function simulateUniswapProposalExecution(
   );
 
   // fork at the height of the proposal creation
+  const forkBlockNumber = proposalDetails.blockNumber;
   await hre.network.provider.request({
     method: "hardhat_reset",
     params: [
       {
         forking: {
           jsonRpcUrl: process.env.MAINNET_URL,
-          blockNumber: proposalDetails.blockNumber,
+          blockNumber: forkBlockNumber,
         },
       },
     ],
@@ -141,4 +144,8 @@ export async function simulateUniswapProposalExecution(
 
   // execute the proposal
   await executeUniswapProposal(targetProposalNumber, governorContract);
+
+  return {
+    forkBlockNumber,
+  };
 }
