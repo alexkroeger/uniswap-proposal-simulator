@@ -221,6 +221,8 @@ export function validateEvent(
   }
   for (const key of expectedKeys) {
     if (!valuesEqual(expectedEvent[key], actualDecodedEvent[key])) {
+      console.log("expected", expectedEvent[key]);
+      console.log("actual", actualDecodedEvent[key]);
       throw new Error(`unexpected value for ${key}`);
     }
   }
