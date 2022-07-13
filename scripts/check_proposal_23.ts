@@ -138,7 +138,6 @@ function checkProposal23Logs(
     "enableFeeAmount",
     [100, 1]
   );
-  console.log("feeSwtichCalldata:", feeSwtichCalldata);
 
   // forward call data
   const forwardCalldata =
@@ -146,7 +145,6 @@ function checkProposal23Logs(
       UNISWAP_V3_FACTORY_ADDRESS,
       feeSwtichCalldata,
     ]);
-  console.log("forwardCalldata:", forwardCalldata);
 
   // L1 sendMessage calldata
   const l1SendMessageCalldata =
@@ -155,7 +153,6 @@ function checkProposal23Logs(
       forwardCalldata,
       TARGET_GAS_LIMIT,
     ]);
-  console.log("l1SendMessageCalldata:", l1SendMessageCalldata);
 
   // L2 relayMessage calldata
   // nonce is derived internally from queue length (uint40 nonce = ICanonicalTransactionChain(ovmCanonicalTransactionChain).getQueueLength();)
@@ -168,7 +165,6 @@ function checkProposal23Logs(
       forwardCalldata,
       nonce,
     ]);
-  console.log("l2RelayMessageCalldata:", l2RelayMessageCalldata);
 
   // first event should be TransactionEnqueued event from canonical transaction chain
   // tx origin is set to an "address alias" derived from the actual sender
