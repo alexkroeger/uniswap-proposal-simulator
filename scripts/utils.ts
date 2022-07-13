@@ -96,9 +96,13 @@ async function executeUniswapProposal(
     .connect(signer)
     .execute(proposalNumber);
 
+  const executionTxReceipt = await ethers.provider.getTransactionReceipt(
+    execution.hash
+  );
+  console.log("execution gas:", executionTxReceipt.gasUsed.toNumber());
+
   return {
-    executionLogs: (await ethers.provider.getTransactionReceipt(execution.hash))
-      .logs,
+    executionLogs: executionTxReceipt.logs,
   };
 }
 
