@@ -191,7 +191,7 @@ function checkProposal23Logs(
     contractInterface: canonicalTransactionChainContract.interface,
   });
 
-  // second event should be SentMessage event
+  // second event should be SentMessage event from the L1 Cross Domain Messenger
   const EXPECTED_SENT_MESSAGE_EVENT = {
     target: UNISWAP_OVM_CROSS_CHAIN_ACCOUNT_ADDRESS,
     sender: UNI_TIMELOCK_ADDRESS,
@@ -206,7 +206,7 @@ function checkProposal23Logs(
     contractInterface: ovmL1MessengerContract.interface,
   });
 
-  // second event should be ExecuteTransaction from UNI timelock
+  // third event should be ExecuteTransaction from UNI timelock
   const txHashTypes = ["address", "uint", "string", "bytes", "uint"];
   const txHashValues = [
     OVM_CROSS_DOMAIN_MESSENGER_DELEGATOR_ADDRESS, // target = OVM Cross domain messenger
@@ -232,7 +232,7 @@ function checkProposal23Logs(
     contractInterface: uniTimelockContract.interface,
   });
 
-  // third and last event should be ProposalExecuted from UNI governor
+  // fourth and last event should be ProposalExecuted from UNI governor
   const EXPECTED_PROPOSAL_EXECUTED_EVENT: { [key: string]: any } = {
     id: ethers.BigNumber.from(TARGET_PROPOSAL_NUMBER),
   };
