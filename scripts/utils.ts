@@ -4,6 +4,7 @@ import hre, { ethers } from "hardhat";
 
 import { Contract, Event, utils } from "ethers";
 import {
+  MAGIC_EVENT_VALUE,
   UNISWAP_GOVERNORBRAVODELEGATOR_ADDRESS,
   UNISWAP_VOTERS,
   VITALIK_ADDRESS,
@@ -204,7 +205,9 @@ export function validateEvent(
     throw new Error("event does not exist");
   }
   if (rawEvent.address.toLowerCase() !== expectedOrigin.toLowerCase()) {
-    throw new Error("event from wrong source");
+    throw new Error(
+      `wrong origin: expected the event origin to be ${expectedOrigin}, got ${rawEvent.address} instead`
+    );
   }
   const actualDecodedEvent = contractInterface.decodeEventLog(
     eventName,
@@ -220,7 +223,10 @@ export function validateEvent(
     throw new Error("keys differ");
   }
   for (const key of expectedKeys) {
-    if (!valuesEqual(expectedEvent[key], actualDecodedEvent[key])) {
+    if (
+      !(expectedEvent[key] === MAGIC_EVENT_VALUE) &&
+      !valuesEqual(expectedEvent[key], actualDecodedEvent[key])
+    ) {
       console.log("expected", expectedEvent[key]);
       console.log("actual", actualDecodedEvent[key]);
       throw new Error(`unexpected value for ${key}`);
